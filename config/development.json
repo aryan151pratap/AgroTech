@@ -1,4 +1,4 @@
 {
-	"MONGODB_URI":"mongodb://127.0.0.1:27017"
+	"MONGODB_URI":"mongodb+srv://apratapsingh151:Di5cavuuEG40rv5d@cluster0.njxal.mongodb.net/"
 }
 
