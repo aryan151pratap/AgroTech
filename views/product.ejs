@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Page - Ecommerce Store</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <span class="text-2xl font-bold text-blue-600">E-Shop</span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="#" class="text-gray-600 hover:text-blue-600">Home</a>
+                    <a href="/shop/" class="text-gray-600 hover:text-blue-600">Shop</a>
+                    <a href="/shop/product" class="text-gray-600 hover:text-blue-600">Cart</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Product Section -->
+    <div class="max-w-6xl mx-auto px-4 py-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Product Images -->
+            <div class="space-y-4">
+                <div class="bg-white p-4 rounded-lg shadow-md">
+                    <img src="https://via.placeholder.com/600x400" alt="Product" class="w-full h-96 object-cover rounded-lg">
+                </div>
+                <div class="grid grid-cols-4 gap-2">
+                    <img src="https://via.placeholder.com/150x100" alt="Thumbnail" class="cursor-pointer border-2 hover:border-blue-500 rounded-lg">
+                    <img src="https://via.placeholder.com/150x100" alt="Thumbnail" class="cursor-pointer border-2 hover:border-blue-500 rounded-lg">
+                    <img src="https://via.placeholder.com/150x100" alt="Thumbnail" class="cursor-pointer border-2 hover:border-blue-500 rounded-lg">
+                    <img src="https://via.placeholder.com/150x100" alt="Thumbnail" class="cursor-pointer border-2 hover:border-blue-500 rounded-lg">
+                </div>
+            </div>
+
+            <!-- Product Details -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h1 class="text-3xl font-bold text-gray-800 mb-2">Premium Wireless Headphones</h1>
+                <div class="flex items-center space-x-2 mb-4">
+                    <span class="text-2xl font-bold text-blue-600">$299.99</span>
+                    <span class="text-gray-500 line-through">$399.99</span>
+                    <span class="text-green-600">25% off</span>
+                </div>
+                <div class="mb-6">
+                    <h3 class="text-lg font-semibold mb-2">Description</h3>
+                    <p class="text-gray-600">Experience premium sound quality with our latest wireless headphones. Featuring active noise cancellation, 30-hour battery life, and premium comfort design.</p>
+                </div>
+                
+                <div class="mb-6">
+                    <h3 class="text-lg font-semibold mb-2">Select Size</h3>
+                    <div class="grid grid-cols-3 gap-2">
+                        <button class="p-2 border rounded-md hover:border-blue-500">One Size</button>
+                    </div>
+                </div>
+
+                <div class="mb-6">
+                    <h3 class="text-lg font-semibold mb-2">Quantity</h3>
+                    <div class="flex items-center space-x-2">
+                        <button class="px-3 py-1 border rounded-md">-</button>
+                        <span class="px-4">1</span>
+                        <button class="px-3 py-1 border rounded-md">+</button>
+                    </div>
+                </div>
+
+                <a href="/tran/payment"><button class="w-full bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700 transition duration-300">
+                    Processed to payment
+                </button></a>
+            </div>
+        </div>
+
+        <!-- Product Details Tabs -->
+        <div class="mt-8 bg-white rounded-lg shadow-md p-6">
+            <div class="border-b mb-4">
+                <div class="flex space-x-4">
+                    <button class="py-2 px-4 font-semibold border-b-2 border-blue-600">Details</button>
+                    <button class="py-2 px-4 text-gray-500 hover:text-blue-600">Reviews (0)</button>
+                </div>
+            </div>
+            <div class="space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <h4 class="font-semibold">Features</h4>
+                        <ul class="list-disc pl-5 text-gray-600">
+                            <li>Active Noise Cancellation</li>
+                            <li>30-hour Battery Life</li>
+                            <li>Premium Comfort Design</li>
+                            <li>Water Resistant (IPX4)</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold">Specifications</h4>
+                        <div class="text-gray-600">
+                            <p>Weight: 254g</p>
+                            <p>Bluetooth Version: 5.0</p>
+                            <p>Charging Time: 2 hours</p>
+                            <p>Warranty: 2 years</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white mt-12">
+        <div class="max-w-6xl mx-auto px-4 py-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h5 class="text-xl font-bold mb-4">E-Shop</h5>
+                    <p class="text-gray-400">Premium online store for electronics and accessories.</p>
+                </div>
+                <div>
+                    <h6 class="font-semibold mb-4">Categories</h6>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white">Headphones</a></li>
+                        <li><a href="#" class="hover:text-white">Speakers</a></li>
+                        <li><a href="#" class="hover:text-white">Accessories</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h6 class="font-semibold mb-4">Follow Us</h6>
+                    <div class="flex space-x-4">
+                        <a href="#" class="hover:text-blue-400">Facebook</a>
+                        <a href="#" class="hover:text-blue-400">Twitter</a>
+                        <a href="#" class="hover:text-blue-400">Instagram</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

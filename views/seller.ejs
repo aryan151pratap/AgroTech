@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Stylish Format</title>
+	<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center h-screen">
+	<div class="w-full h-full flex flex-col">
+		<!-- Navbar -->
+		<nav class="bg-gray-900 text-white px-6 py-4 fixed w-full top-0 z-50 flex justify-between items-center shadow-lg">
+			<h1 class="text-3xl font-bold text-yellow-400 hover:text-yellow-300 transition">FORMAT</h1>
+			<ul class="hidden md:flex space-x-6 items-center text-lg">
+				<li><a href="/reel/dashboard" class="hover:text-green-400 transition">Blogs & Articles</a></li>
+				<li><a href="/reel/reels" class="hover:text-green-400 transition">Reel</a></li>
+				<li><a href="/shop" class="hover:text-green-400 transition">Shop</a></li>
+				<li><a href="/tran/loan" class="hover:text-green-400 transition">Get Loan</a></li>
+				<% if(users.blogger == "yes"){ %>
+					<li><a href="/reel/create" class="hover:text-green-400 block">Add Blogs/Articles</a></li>
+				<% } %>
+				<li><a href="/users/seller" class="hover:text-green-400 transition">Seller</a></li>
+				<li><a href="/tran/transaction" class="hover:text-green-400 transition">Transactions</a></li>
+				<li><a href="/users/profile" class="hover:text-green-400 transition">Profile</a></li>
+				<li><a href="/users/logout" class="hover:text-red-400 transition">Logout</a></li>
+			</ul>
+			<div class="md:hidden p-4 bg-gray-900 text-white flex justify-between items-center">
+				<button id="toggleSidebar" class="md:hidden text-yellow-400">
+					<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+					</svg>
+				</button>
+			</div>
+			<aside id="mobileSidebar" class="fixed inset-y-0 left-0 w-64 bg-gray-900 text-white p-6 transform -translate-x-full transition-transform md:hidden">
+				<nav class="space-y-1">
+					<ul class="flex flex-col space-y-4 ">
+						<li><a href="/reel/dashboard" class="hover:text-green-400 block">Blogs and Articles</a></li>
+						<li><a href="/reel/reels" class="hover:text-green-400 block">Reel</a></li>
+						<li><a href="/shop" class="hover:text-green-400 block">Shop</a></li>
+						<li><a href="/tran/loan" class="hover:text-green-400 block">Get Loan</a></li>
+						<% if(users.blogger == "yes"){ %>
+							<li><a href="/reel/create" class="hover:text-green-400 block">Add Blogs/Articles</a></li>
+							<% } %>
+						<li><a href="/users/seller" class="hover:text-green-400 block">Seller</a></li>
+						<li><a href="/tran/transaction" class="hover:text-green-400 block">Transaction History</a></li>
+						<li><a href="/users/profile" class="hover:text-green-400 block">Profile</a></li>
+						<li><a href="/users/logout" class="hover:text-red-400 block">Logout</a></li>
+						<li><a href="#" class="hover:text-yellow-400 block">Help</a></li>
+					</ul>
+				</nav>
+			</aside>
+			
+		</nav>
+
+		<!-- Main Content -->
+		<div class="w-full h-full px-8 py-24 flex flex-col items-center">
+			<div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-3xl">
+				<!-- Button Section -->
+				<div class="flex justify-end space-x-2 mb-6">
+					<button id="show-reels" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition">Seller</button>
+					<% if(users.seller == "yes"){ %>
+						<button id="show-blogs" class="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition">Add Product</button>
+					<% } else { %>
+						<button id="show-blogs" class="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition hidden">Add Product</button>
+					<% } %>
+					<button id="show-blogger" class="px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition">Blogger</button>
+				</div>
+
+				<!-- Seller Form -->
+				<div id="reels-form" class="form-container flex flex-col">
+					<form action="/users/sell" method="post" enctype="multipart/form-data" class="space-y-4">
+						<h2 class="text-xl font-semibold text-gray-700">Fill Seller Details</h2>
+						<select name="seller" required class="w-full p-2 border rounded-md focus:ring focus:ring-indigo-300">
+							<option value="yes">Yes</option>
+							<option value="no">No</option>
+						</select>
+						<input type="text" name="upi_id" placeholder="Enter UPI ID" class="p-2 w-full border rounded-md">
+						<input type="text" name="account" placeholder="Enter your Account Number" class="p-2 w-full border rounded-md">
+						<label class="text-gray-700 ">Upload QR Code Image</label>
+						<input type="file" name="QR" class="w-full p-2 bg-blue-100 hover:bg-blue-200 rounded-md">
+						<input type="submit" value="Add Seller" class="w-full p-2 bg-violet-500 text-white rounded-md hover:bg-violet-700 transition">
+					</form>
+					<form action="/users/cancel" method="post" class="mt-5">
+						<label class="text-gray-700 ">If you <b class="text-red-400">don't</b> want to become <b>seller</b></label>
+						<input type="submit" value="Remove from Seller" class="w-full p-2 bg-red-500 text-white rounded-md hover:bg-red-700 transition">
+					</form>
+					<div class="mt-2 text-zinc-700">
+						<% if(sucess.length > 0 || error.length > 0) { %> 
+							<label for="" class="text-green-400"><%= sucess %></label>
+							<label for="" class="text-red-400"><%= error %></label>
+						<% } %>
+					</div>
+				</div>
+
+				<!-- Product Form -->
+				<div id="blogs-form" class="form-container hidden space-y-4">
+					<form action="/shop/add" method="post" enctype="multipart/form-data" class="flex flex-col gap-2">
+						<label class="text-gray-700">Product Name</label>
+						<input type="text" name="productname" placeholder="Enter Product Name" class="p-2 w-full border rounded-md">
+						<label class="text-gray-700">Price per Unit</label>
+						<input type="number" name="price" placeholder="Enter price" class="p-2 w-full border rounded-md">
+						<label class="text-gray-700">Total Quantity</label>
+						<input type="number" name="quantity" placeholder="Enter Quantity" class="p-2 w-full border rounded-md">
+						<label class="text-gray-700">Upload Product Image</label>
+						<input type="file" name="product_image" class="w-full p-2 bg-blue-100 hover:bg-blue-200 rounded-md">
+						<label class="text-gray-700">Category</label>
+						<select name="category" class="w-full p-2 border rounded-md">
+							<option value="crop">Crops</option>
+							<option value="tool">Farming Tools</option>
+							<option value="fertilizer">Fertilizers</option>
+						</select>
+						<textarea name="description" placeholder="Description" class="p-2 w-full border rounded-md"></textarea>
+						<input type="submit" value="Add Product" class="w-full p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
+					</form>
+				</div>
+
+				<!-- Blogger Form -->
+				<div id="blogger-form" class="form-container hidden space-y-4">
+					<form action="/users/blogger" method="post">
+						<p class="text-gray-700">Want to become a <b class="text-red-500">Blogger</b> and post Reels, Blogs, or Articles?</p>
+						<select name="blogger" required class="w-full p-2 mt-5 border rounded-md focus:ring focus:ring-indigo-300">
+							<option value="yes">Yes</option>
+							<option value="no">No</option>
+						</select>
+						<input type="submit" value="Become a Blogger" class="w-full mt-3 p-2 bg-purple-500 text-white rounded-md hover:bg-purple-600 transition">
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		document.getElementById('toggleSidebar').addEventListener('click', function() {
+            document.getElementById('mobileSidebar').classList.toggle('-translate-x-full');
+        });
+
+		document.addEventListener("DOMContentLoaded", () => {
+			const reelsForm = document.getElementById("reels-form");
+			const blogsForm = document.getElementById("blogs-form");
+			const bloggerForm = document.getElementById("blogger-form");
+			const showReelsButton = document.getElementById("show-reels");
+			const showBlogsButton = document.getElementById("show-blogs");
+			const showBloggerButton = document.getElementById("show-blogger");
+
+			
+
+			showReelsButton.addEventListener("click", () => {
+				reelsForm.classList.remove("hidden");
+				blogsForm.classList.add("hidden");
+				bloggerForm.classList.add("hidden");
+			});
+
+			showBlogsButton.addEventListener("click", () => {
+				reelsForm.classList.add("hidden");
+				blogsForm.classList.remove("hidden");
+				bloggerForm.classList.add("hidden");
+			});
+
+			showBloggerButton.addEventListener("click", () => {
+				reelsForm.classList.add("hidden");
+				blogsForm.classList.add("hidden");
+				bloggerForm.classList.remove("hidden");
+			});
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment Options</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Styles for the Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
+      overflow: hidden; /* Prevent scrolling */
+    }
+    .modal-content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 30px;
+      background-color: #fff;
+      border: 1px solid #888;
+      width: 90%;
+      max-width: 450px; /* Fixed width */
+      max-height: 90%; /* Fixed height */
+      overflow: hidden;
+    }
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .modal-image {
+      width: 100%;
+      height: auto;
+      object-fit: contain; /* Make sure image is contained within the modal */
+    }
+  </style>
+</head>
+<body class="bg-gray-100">
+
+  <!-- Container for the payment options page -->
+  <div class="flex justify-center items-center h-screen">
+    <div class="w-full max-w-lg bg-white p-8 rounded-lg shadow-lg">
+      
+      <!-- Page Title -->
+      <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">Choose Payment Method</h1>
+
+      <!-- Payment Methods Form -->
+      <div>
+        
+        <!-- UPI Payment Option (label only) -->
+        <div class="mb-6">
+          <label for="upi" class="block text-sm font-semibold text-gray-700">UPI Payment</label>
+          <p class="text-gray-600"><%= image.user.upi_id %></p>
+        </div>
+        
+        <!-- Account Number Payment Option (label only) -->
+        <div class="mb-6">
+          <label for="account-number" class="block text-sm font-semibold text-gray-700">Account Number Payment</label>
+          <p class="text-gray-600"><%= image.user.account %></p>
+        </div>
+
+        <!-- QR Code Payment Option (image only) -->
+        <div class="mb-6">
+          <label for="qr-code" class="block text-sm font-semibold text-gray-700">Scan QR Code</label>
+          <div class="flex items-center justify-center">
+            <!-- Replace this with your QR code URL -->
+            <img id="qrCodeImage" src="data:image/jpeg;base64,<%= image.user.QR.toString('base64') %>" alt="QR Code" class="rounded-md w-40 mt-2 mb-4 object-cover cursor-pointer" onclick="openModal()">
+            <p class="text-gray-600 text-sm">Scan this QR code to make a payment</p>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="flex justify-between items-center gap-3">
+          <button type="submit" class="bg-blue-600 text-white p-3 rounded-md w-full hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500" onclick="openModal()">
+            Scan QR code
+          </button>
+          <form action="/tran/pay_sucessful/<%= image._id %>/<%= amount %>" method="post">
+            <input type="submit" name="payment" class="bg-green-400 p-3 rounded-md shadow-[6px_6px_0px_0px_#3e5948] hover:shadow-lg text-white" value="I have paid">
+          </form>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for image display -->
+  <div id="imageModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <img id="modalImage" src="" alt="QR Code" class="modal-image">
+    </div>
+  </div>
+
+  <script>
+    // Function to open the modal and display the image
+    function openModal() {
+      var modal = document.getElementById("imageModal");
+      var img = document.getElementById("qrCodeImage");
+      var modalImg = document.getElementById("modalImage");
+      modal.style.display = "block";
+      modalImg.src = img.src;
+    }
+
+    // Function to close the modal
+    function closeModal() {
+      var modal = document.getElementById("imageModal");
+      modal.style.display = "none";
+    }
+
+    // Close the modal if the user clicks anywhere outside of the modal
+    window.onclick = function(event) {
+      var modal = document.getElementById("imageModal");
+      if (event.target === modal) {
+        modal.style.display = "none";
+      }
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Format Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000;
+            color: #fff;
+        }
+        .reels-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            padding: 20px;
+            overflow-y: auto;
+            height: 100vh;
+            scroll-snap-type: y mandatory;
+        }
+        .reel {
+            width: 100%;
+            max-width: 400px;
+            position: relative;
+            scroll-snap-align: start;
+        }
+        .reel iframe, .reel video {
+            width: 100%;
+            height: 600px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center h-screen">
+    <div class="w-full h-full flex flex-col">
+        <!-- Navbar -->
+        <nav class="bg-gray-900 text-white px-6 py-4 fixed w-full top-0 z-50 flex justify-between items-center shadow-lg">
+            <h1 class="text-3xl font-bold text-yellow-400 hover:text-yellow-300 transition">FORMAT</h1>
+            <ul class="hidden md:flex space-x-6 items-center text-lg">
+                <li><a href="/reel/dashboard" class="hover:text-green-400 transition">Blogs & Articles</a></li>
+                <li><a href="/reel/reels" class="hover:text-green-400 transition">Reel</a></li>
+                <li><a href="/shop" class="hover:text-green-400 transition">Shop</a></li>
+                <li><a href="/tran/loan" class="hover:text-green-400 transition">Get Loan</a></li>
+                <% if(users.blogger == "yes"){ %>
+                    <li><a href="/reel/create" class="hover:text-green-400 block">Add Blogs/Articles</a></li>
+                <% } %>
+                <li><a href="/users/seller" class="hover:text-green-400 transition">Seller</a></li>
+                <li><a href="/tran/transaction" class="hover:text-green-400 transition">Transactions</a></li>
+                <li><a href="/users/profile" class="hover:text-green-400 transition">Profile</a></li>
+                <li><a href="/users/logout" class="hover:text-red-400 transition">Logout</a></li>
+            </ul>
+            <button id="menu-toggle" class="md:hidden text-yellow-400">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+            </button>
+            <div id="mobile-menu" class="hidden fixed top-16 left-0 w-full bg-gray-900 text-white py-4 px-6 md:hidden">
+                <ul class="flex flex-col space-y-4 ">
+                    <li><a href="/reel/dashboard" class="hover:text-green-400 block">Blogs and Articles</a></li>
+                    <li><a href="/reel/reels" class="hover:text-green-400 block">Reel</a></li>
+                    <li><a href="/shop" class="hover:text-green-400 block">Shop</a></li>
+                    <li><a href="/tran/loan" class="hover:text-green-400 block">Get Loan</a></li>
+                    <% if(users.blogger == "yes"){ %>
+                        <li><a href="/reel/create" class="hover:text-green-400 block">Add Blogs/Articles</a></li>
+                    <% } %>
+                    <li><a href="/users/seller" class="hover:text-green-400 block">Seller</a></li>
+                    <li><a href="/tran/transaction" class="hover:text-green-400 block">Transaction History</a></li>
+                    <li><a href="/users/profile" class="hover:text-green-400 block">Profile</a></li>
+                    <li><a href="/users/logout" class="hover:text-red-400 block">Logout</a></li>
+                    <li><a href="#" class="hover:text-yellow-400 block">Help</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Mobile Menu -->
+
+        <!-- Reels Section -->
+        <div class="reels-container mt-20 flex flex-col gap-5 md-10">
+            <% blog.reverse().forEach(function(items){ %>
+                <% if(items.content.includes("youtube.com")) { %>
+                    <div class="reel">
+                        <iframe class="youtube-video" src="<%= items.content %>" allowfullscreen></iframe>
+                    </div>
+                <% } else { %>
+                    <div class="reel">
+                        <video class="video-reel" src="<%= items.content %>" muted playsinline></video>
+                    </div>
+                <% } %>
+            <% }) %>
+        </div>
+    </div>
+
+    <script>
+        // Handle menu toggle for mobile view
+        document.addEventListener("DOMContentLoaded", function () {
+            const menuToggle = document.getElementById("menu-toggle");
+            const mobileMenu = document.getElementById("mobile-menu");
+        
+            menuToggle.addEventListener("click", function () {
+                mobileMenu.classList.toggle("hidden");
+            });
+        });
+    
+        let youtubePlayers = [];
+        let currentPlayingIndex = null; // Track the index of the currently playing reel
+    
+        // YouTube API initialization
+        function onYouTubeIframeAPIReady() {
+            document.querySelectorAll(".youtube-video").forEach((iframe, index) => {
+                youtubePlayers[index] = new YT.Player(iframe);
+            });
+        }
+    
+        document.addEventListener("DOMContentLoaded", () => {
+            const reels = document.querySelectorAll(".reel");
+            const videos = document.querySelectorAll(".video-reel");
+    
+            // Stop all videos when switching to another
+            function stopAllVideos() {
+                videos.forEach(video => {
+                    video.pause();
+                    video.currentTime = 0;
+                });
+    
+                youtubePlayers.forEach(player => {
+                    if (player && player.pauseVideo) {
+                        player.pauseVideo();
+                    }
+                });
+            }
+    
+            // Play a specific reel (video or YouTube)
+            function playReel(index) {
+                if (currentPlayingIndex === index) return; // Prevent unnecessary replays
+    
+                stopAllVideos();
+                currentPlayingIndex = index;
+    
+                const activeReel = reels[index];
+                if (!activeReel) return;
+    
+                const activeVideo = activeReel.querySelector(".video-reel");
+                const activeYouTube = youtubePlayers[index];
+    
+                // Play the video if it exists
+                if (activeVideo) {
+                    activeVideo.play();
+                    activeVideo.muted = false; // Unmute the video
+                }
+    
+                // Play the YouTube video if it exists
+                if (activeYouTube && activeYouTube.playVideo) {
+                    activeYouTube.playVideo();
+                }
+            }
+    
+            // Scroll handler to detect which reel is in view
+            function handleScroll() {
+                let closestIndex = null;
+                let minDistance = window.innerHeight;
+    
+                // Loop through all reels to find the closest one to the center of the viewport
+                reels.forEach((reel, index) => {
+                    const rect = reel.getBoundingClientRect();
+                    const distance = Math.abs(rect.top - (window.innerHeight / 2));
+    
+                    if (distance < minDistance && rect.top >= 0 && rect.bottom <= window.innerHeight) {
+                        minDistance = distance;
+                        closestIndex = index;
+                    }
+                });
+    
+                if (closestIndex !== null) {
+                    playReel(closestIndex);
+                }
+            }
+    
+            // Click event for each reel (to play video on click)
+            reels.forEach((reel, index) => {
+                reel.addEventListener("click", () => playReel(index));
+            });
+    
+            const reelsContainer = document.querySelector(".reels-container");
+            // Listen for the scroll event to detect when a reel comes into view
+            reelsContainer.addEventListener("scroll", handleScroll);
+    
+            // Call the handleScroll function on page load to play the first visible reel
+            handleScroll();
+        });
+    </script>
+    
+</body>
+</html>

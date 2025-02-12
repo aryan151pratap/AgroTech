@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Profile Page</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-800">
+    <div class="flex flex-col md:flex-row min-h-screen">
+        <!-- Sidebar -->
+        <aside class="w-full md:w-64 bg-gray-900 text-white p-6 md:fixed md:h-screen hidden md:block">
+            <div class="flex items-center gap-2 mb-8">
+                <h1 class="text-xl font-bold">FORMAT</h1>
+            </div>
+            <nav class="space-y-1">
+                <a href="/reel/dashboard" class="block px-3 py-2 rounded-lg hover:bg-gray-800">Blogs & Articles</a>
+                <a href="/users/logout" class="block px-3 py-2 rounded-lg hover:bg-gray-800 text-red-400">Logout</a>
+            </nav>
+        </aside>
+        
+        <!-- Mobile Sidebar Toggle -->
+        <div class="md:hidden p-4 bg-gray-900 text-white flex justify-between items-center">
+            <h1 class="text-lg font-bold">FORMAT</h1>
+            <button id="toggleSidebar" class="text-white">☰</button>
+        </div>
+        <aside id="mobileSidebar" class="fixed inset-y-0 left-0 w-64 bg-gray-900 text-white p-6 transform -translate-x-full transition-transform md:hidden">
+            <nav class="space-y-1">
+                <a href="/reel/dashboard" class="block px-3 py-2 rounded-lg hover:bg-gray-800">Blogs & Articles</a>
+                <a href="/users/logout" class="block px-3 py-2 rounded-lg hover:bg-gray-800 text-red-400">Logout</a>
+            </nav>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="flex-1 p-4 md:ml-64">
+            <div class="bg-white rounded-lg shadow p-6">
+                <div class="flex flex-col md:flex-row items-center md:justify-between">
+                    <div class="flex items-center gap-4">
+                        <img src="https://via.placeholder.com/128" class="w-24 h-24 rounded-full border-4">
+                        <div>
+                            <h2 class="text-2xl font-bold">John Doe</h2>
+                            <p class="text-gray-600">@johndoe</p>
+                        </div>
+                    </div>
+                    <button class="mt-4 md:mt-0 px-4 py-2 border rounded-lg hover:bg-gray-100">Edit Profile</button>
+                </div>
+            </div>
+            
+            <!-- Posts Section -->
+            <div class="mt-6 space-y-4">
+                <div class="bg-white rounded-lg shadow p-4">
+                    <div class="flex gap-4">
+                        <img src="https://via.placeholder.com/48" class="w-12 h-12 rounded-full">
+                        <div>
+                            <h3 class="font-semibold">Jane Doe</h3>
+                            <p class="text-gray-600">Lorem ipsum dolor sit amet...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <!-- Right Sidebar (Hidden on Small Screens) -->
+        <aside class="hidden lg:block w-80 bg-white border-l p-6">
+            <h3 class="text-lg font-semibold mb-4">Trending Now</h3>
+            <div class="p-4 bg-gray-50 rounded-lg">#MainNewsOfTheDay</div>
+        </aside>
+    </div>
+
+    <script>
+        document.getElementById('toggleSidebar').addEventListener('click', function() {
+            document.getElementById('mobileSidebar').classList.toggle('-translate-x-full');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Transaction History</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50">
+
+  <!-- Container for the transaction history page -->
+  <div class="max-w-4xl mx-auto my-12 p-6 bg-white shadow-lg rounded-lg">
+    <h1 class="text-3xl font-semibold text-gray-800 mb-6">Transaction History</h1>
+    
+    <!-- Transaction History Table -->
+    <div class="overflow-x-auto flex overflow-y-auto">
+      <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+        <thead>
+          <tr class="bg-gray-200">
+            <th class="text-left py-3 px-4 text-sm text-gray-700">Transaction ID</th>
+            <th class="text-left py-3 px-4 text-sm text-gray-700">Amount</th>
+            <th class="text-left py-3 px-4 text-sm text-gray-700">Date</th>
+            <th class="text-left py-3 px-4 text-sm text-gray-700">Status</th>
+            <th class="text-left py-3 px-4 text-sm text-gray-700">Product Name</th>
+            <th class="text-left py-3 px-4 text-sm text-gray-700">Sender Phone Number</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Example Transaction 1 -->
+          <% if(data.length > 0) { %> 
+            <% data.reverse().forEach((i) => { %>
+              <tr class="border-t border-gray-200 hover:bg-gray-50">
+                <td class="py-3 px-4 text-sm text-gray-700"><%= i._id %></td>
+                <td class="py-3 px-4 text-sm text-gray-700">₹<%= i.price %></td>
+                <td class="py-3 px-4 text-sm text-gray-700"><%= new Date(i.date).toISOString().split('T')[0] %></td>
+                <td class="py-3 px-4 text-sm text-gray-700">
+                  <% if(i.status == "pending") { %>
+                    <span class="text-yellow-600 font-semibold"><%= i.status %></span>
+                  <% } else if(i.status == "failed") {%>
+                    <span class="text-red-600 font-semibold"><%= i.status %></span>
+                  <% } else { %>
+                    <span class="text-green-600 font-semibold"><%= i.status %></span>
+                  <% } %>
+                </td>
+                <td class="py-3 px-4 text-sm text-gray-700"><%= i.product %></td>
+                <td class="py-3 px-4 text-sm text-gray-700"><%= i.sender_phonenumber %></td>
+              </tr>
+            <% }) %>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Buttons -->
+    <div class="mt-8 flex flex-col sm:flex-row justify-between space-y-4 sm:space-y-0">
+      <a href="/shop/" class="bg-blue-600 text-white px-6 py-2 rounded-md text-lg hover:bg-blue-700 text-center">
+        Back
+      </a>
+      <a href="#" class="bg-gray-300 text-gray-700 px-6 py-2 rounded-md text-lg hover:bg-gray-400 text-center" onclick="window.print()">
+        Print Transaction History
+      </a>
+    </div>
+  </div>
+
+</body>
+</html>

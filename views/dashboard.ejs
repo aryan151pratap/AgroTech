@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Format Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+</head>
+<body class="bg-gray-50 font-sans bg-gradient-to-br from-gray-100 to-gray-200 min-h-screen">
+    <!-- Navbar -->
+    <nav class="bg-gray-900 text-white px-6 py-4 fixed w-full top-0 z-50 flex justify-between items-center shadow-lg">
+        <h1 class="text-3xl font-bold text-yellow-400 hover:text-yellow-300 transition">FORMAT</h1>
+        <ul class="hidden md:flex space-x-6 items-center text-lg">
+            <li><a href="/reel/dashboard" class="hover:text-green-400 transition">Blogs & Articles</a></li>
+            <li><a href="/reel/reels" class="hover:text-green-400 transition">Reel</a></li>
+            <li><a href="/shop" class="hover:text-green-400 transition">Shop</a></li>
+            <li><a href="/tran/loan" class="hover:text-green-400 transition">Get Loan</a></li>
+            <% if(users.blogger == "yes"){ %>
+                <li><a href="/reel/create" class="hover:text-green-400 block">Add Blogs/Articles</a></li>
+            <% } %>
+            <li><a href="/users/seller" class="hover:text-green-400 transition">Seller</a></li>
+            <li><a href="/tran/transaction" class="hover:text-green-400 transition">Transactions</a></li>
+            <li><a href="/users/profile" class="hover:text-green-400 transition">Profile</a></li>
+            <li><a href="/users/logout" class="hover:text-red-400 transition">Logout</a></li>
+        </ul>
+        <div class="md:hidden p-4 bg-gray-900 text-white flex justify-between items-center">
+            <button id="toggleSidebar" class="md:hidden text-yellow-400">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+            </button>
+        </div>
+        <aside id="mobileSidebar" class="fixed inset-y-0 left-0 w-64 bg-gray-900 text-white p-6 transform -translate-x-full transition-transform md:hidden">
+            <nav class="space-y-1">
+                <ul class="flex flex-col space-y-4 ">
+                    <li><a href="/reel/dashboard" class="hover:text-green-400 block">Blogs and Articles</a></li>
+                    <li><a href="/reel/reels" class="hover:text-green-400 block">Reel</a></li>
+                    <li><a href="/shop" class="hover:text-green-400 block">Shop</a></li>
+                    <li><a href="/tran/loan" class="hover:text-green-400 block">Get Loan</a></li>
+                    <% if(users.blogger == "yes"){ %>
+                        <li><a href="/reel/create" class="hover:text-green-400 block">Add Blogs/Articles</a></li>
+                        <% } %>
+                    <li><a href="/users/seller" class="hover:text-green-400 block">Seller</a></li>
+                    <li><a href="/tran/transaction" class="hover:text-green-400 block">Transaction History</a></li>
+                    <li><a href="/users/profile" class="hover:text-green-400 block">Profile</a></li>
+                    <li><a href="/users/logout" class="hover:text-red-400 block">Logout</a></li>
+                    <li><a href="#" class="hover:text-yellow-400 block">Help</a></li>
+                </ul>
+            </nav>
+        </aside>
+        
+    </nav>
+
+    <!-- Main Content -->
+    <div class="mt-20 px-4 md:px-10 py-8">
+        <div class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-gray-800 mb-4">Articles & Blogs</h1>
+            <p class="text-gray-600 max-w-2xl mx-auto">Explore insightful articles and creative blogs from our community</p>
+        </div>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 px-4">
+            <% fileData.reverse().forEach(function(items){ %>
+                <% if(items.fileType && items.fileType.startsWith('image/')){ %>
+                    <div onclick='openModal("<%= items.head %>", "<%= items.content %>", "data:image/jpeg;base64,<%= items.data.toString("base64") %>")' 
+                         class="group relative bg-white rounded-xl shadow-md hover:shadow-xl cursor-pointer transform transition-all duration-300 hover:-translate-y-2 overflow-hidden">
+                        <div class="relative h-40 overflow-hidden">
+                            <img src="data:image/jpeg;base64,<%= items.data.toString('base64') %>" 
+                                 alt="<%= items.head %>" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent"></div>
+                        </div>
+                        <div class="p-4">
+                            <div class="flex items-center mb-2">
+                                <span class="inline-block w-8 h-8 rounded-full bg-gray-200 mr-2"></span>
+                                <h2 class="font-semibold text-gray-800"><%= items.user.name %></h2>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2 leading-tight"><%= items.head %></h3>
+                            <p class="text-gray-600 line-clamp-3 mb-4">
+                                <%= items.content %>
+                            </p>
+                            <span class="text-yellow-500 font-medium hover:text-yellow-600 transition-colors">
+                                Read more →
+                            </span>
+                        </div>
+                    </div>
+                <% } %>
+            <% }) %>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="modal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-md shadow-2xl max-w-2xl w-full max-h-[90vh] flex flex-col">
+            <div class="flex justify-between items-center p-4 border-b">
+                <h2 id="modal-title" class="text-2xl font-bold text-gray-900"></h2>
+                <button onclick="closeModal()" class="text-gray-500 hover:text-gray-700 transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="overflow-y-auto p-6">
+                <img id="modal-image" class="w-full h-full object-cover rounded-md mb-6"/>
+                <div class="prose max-w-none">
+                    <p id="modal-content" class="text-gray-700 leading-relaxed whitespace-pre-line"></p>
+                </div>
+            </div>
+            <div class="p-4 border-t mt-auto">
+                <button onclick="closeModal()" class="w-full bg-yellow-500 text-white px-6 py-2 rounded-lg hover:bg-yellow-600 transition-colors">
+                    Close Article
+                </button>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.getElementById('toggleSidebar').addEventListener('click', function() {
+            document.getElementById('mobileSidebar').classList.toggle('-translate-x-full');
+        });
+
+        function openModal(title, content, imageSrc) {
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-content').innerText = content;
+            document.getElementById('modal-image').src = imageSrc;
+            document.getElementById('modal').classList.remove('hidden');
+            document.body.classList.add('overflow-hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.add('hidden');
+            document.body.classList.remove('overflow-hidden');
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('modal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>OTP Verification</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        input[type="text"], input[type="String"], input[type="password"], button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+        .button {
+            height: 70%;
+            width: 40%;
+            padding: 2px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 2px;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+        .message {
+            margin-top: 10px;
+            text-align: center;
+            color: red;
+        }
+        form{
+            padding: 10px;
+        }
+
+        .otp-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .otp-input {
+            width: 50px;
+            height: 50px;
+            margin: 0 5px;
+            text-align: center;
+            font-size: 24px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .otp-input:focus {
+            border-color: #4c51bf;
+        }
+
+        .otp-input:disabled {
+            background-color: #f3f4f6;
+            border-color: #e2e8f0;
+        }
+
+        .otp-input:last-child {
+            margin-right: 0;
+        }
+
+        .otp-container input {
+            /* Ensure all input elements have the same size */
+            box-sizing: border-box;
+        }
+
+    </style>
+    
+</head>
+<body>
+    <div class="container">
+        <h2>OTP verify</h2>
+        <div>
+            <form action="/users/send-otp" method="post" id="phoneForm">
+                <input type="text" placeholder="Phone number/ email" name="phonenumber" required>
+                <input type="submit" value="Send OTP" class="button"  onclick="show()">
+            </form>
+        </div>
+        <div id="click_me">
+            
+            <form action="/users/verify-otp" method="post" style="display:<%= display %>;">
+                <div  class="otp-container">
+                    <input type="text" id="otp1" class="otp-input" maxlength="1" oninput="moveFocus(event, 'otp2')" name="otp1" required>
+                    <input type="text" id="otp2" class="otp-input" maxlength="1" oninput="moveFocus(event, 'otp3')" onkeydown="moveFocusBackward(event, 'otp1')" name="otp2" required>
+                    <input type="text" id="otp3" class="otp-input" maxlength="1" oninput="moveFocus(event, 'otp4')" onkeydown="moveFocusBackward(event, 'otp2')" name="otp3" required>
+                    <input type="text" id="otp4" class="otp-input" maxlength="1" onkeydown="moveFocusBackward(event, 'otp3')" name="otp4" required>
+                </div>
+                <input type="submit" value="Verify OTP" class="button">
+            </form>
+        </div> 
+        <div>
+            <% if(error.length > 0) { %>    
+                <h3 style="color: rgb(212, 65, 65);"><%= error %></h3>
+            <% } %>
+        </div>
+
+    </div>
+    <script>
+        function moveFocus(event, nextElementId) {
+            if (event.target.value.length === 1) {
+                document.getElementById(nextElementId).focus();
+            }
+        }
+
+        function moveFocusBackward(event, prevElementId) {
+            if (event.key === 'Backspace' && event.target.value.length === 0) {
+                document.getElementById(prevElementId).focus();
+            }
+        }
+    </script>
+</body>
+</html>

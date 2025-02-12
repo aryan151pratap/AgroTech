@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Loan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 font-sans">
+    <div class="max-w-4xl mx-auto p-6 md:p-8 bg-white shadow-lg rounded-lg mt-6 md:mt-10">
+        <h1 class="text-2xl md:text-3xl font-semibold text-center text-gray-800 mb-6 md:mb-8">Loan Application</h1>
+
+        <!-- Loan Form -->
+        <form action="/tran/get_loan" method="post" class="space-y-4 md:space-y-6">
+            <!-- Personal Details -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                <div>
+                    <label for="name" class="block text-gray-600">Full Name</label>
+                    <input type="text" id="name" name="name" required class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-400">
+                </div>
+                <div>
+                    <label for="email" class="block text-gray-600">Email Address</label>
+                    <input type="email" id="email" name="email" required class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-400">
+                </div>
+            </div>
+
+            <!-- Loan Details -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                <div>
+                    <label for="accountnumber" class="block text-gray-600">Account Number</label>
+                    <input type="number" id="accountnumber" name="accountnumber" required class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-400">
+                </div>
+                <div>
+                    <label for="loanTerm" class="block text-gray-600">Loan Term (Months)</label>
+                    <input type="number" id="loanTerm" name="loanTerm" required class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-400">
+                </div>
+            </div>
+            <div>
+                <label class="block text-gray-600">Select Bank</label>
+                <select name="bank" required class="w-full px-4 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                    <option value="">Select bank</option>
+                    <option value="bob">Bank Of Baroda (BOB)</option>
+                    <option value="pnb">Panjab National Bank (PNB)</option>
+                    <option value="sbi">State Bank of India (SBI)</option>
+                </select>
+            </div>
+
+            <div class="flex justify-between">
+                <a href="/reel/dashboard" class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 focus:ring-2 focus:ring-red-400">Back</a>
+                <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-400">Calculate Loan</button>
+            </div>
+        </form>
+
+        <% if(sucess.length > 0) { %>
+            <form action="/tran/apply" method="post" class="mt-6">
+                <div>
+                    <h1 class="text-green-500 text-lg"><%= sucess %> ₹<%= total_loan %></h1>
+                </div>
+                <div class="mt-4">
+                    <label for="loanAmount" class="block text-gray-600">Loan Amount</label>
+                    <input type="number" id="loanAmount" name="loanAmount" placeholder="Enter Loan Amount" required class="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-indigo-400">
+                </div>
+                <div class="mt-4 flex justify-center">
+                    <button type="submit" class="px-6 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-400">Apply for Loan</button>
+                </div>
+            </form>
+        <% } %>
+
+        <!-- Transaction History -->
+        <div class="mt-10">
+            <h2 class="text-xl md:text-2xl font-semibold text-gray-800 mb-4">Transaction History</h2>
+            <div class="overflow-x-auto">
+                <table class="w-full bg-white shadow-md rounded-lg text-sm md:text-base">
+                    <thead>
+                        <tr class="bg-indigo-600 text-white">
+                            <th class="px-4 py-2 text-left">Transaction ID</th>
+                            <th class="px-4 py-2 text-left">Amount</th>
+                            <th class="px-4 py-2 text-left">Date</th>
+                            <th class="px-4 py-2 text-left">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% if(data.length > 0){ %>
+                            <% data.reverse().forEach(function(i){ %>
+                                <tr class="border-b">
+                                    <td class="px-4 py-2 break-words"><%= i._id %></td>
+                                    <td class="px-4 py-2">₹<%= i.price %></td>
+                                    <td class="px-4 py-2"><%= new Date(i.date).toISOString().split('T')[0] %></td>
+                                    <% if(i.status == "pending") { %>
+                                        <td class="px-4 py-2 text-yellow-500"><%= i.status %></td>
+                                    <% } else if(i.status == "failed") {%>
+                                        <td class="px-4 py-2 text-red-500"><%= i.status %></td>
+                                    <% } else { %>
+                                        <td class="px-4 py-2 text-green-500"><%= i.status %></td>
+                                    <% } %>
+                                </tr>
+                            <% }) %>
+                        <% } %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
