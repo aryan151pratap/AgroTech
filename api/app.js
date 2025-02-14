@@ -36,10 +36,16 @@ const reelRoute = require("../routes/reelRoute");
 const shopRoute = require("../routes/shopRoute");
 const transactionRoute = require("../routes/transactionRoute");
 
-app.use("/api/users", userRoute);
-app.use("/api/reel", reelRoute);
-app.use("/api/shop", shopRoute);
-app.use("/api/tran", transactionRoute);
+app.use("/users", userRoute);
+app.use("/reel", reelRoute);
+app.use("/shop", shopRoute);
+app.use("/tran", transactionRoute);
+
+// ✅ Add Local Server Support
+if (process.env.NODE_ENV !== "production") {
+  const PORT = process.env.PORT || 3000;
+  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+}
 
 // Export for Vercel
 module.exports = app;
