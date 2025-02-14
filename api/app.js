@@ -5,10 +5,10 @@ const cookieParser = require('cookie-parser');
 const flash = require("connect-flash");
 const expressSession = require("express-session");
 
-const userRoute = require("./routes/userRoute");
-const reelRoute = require("./routes/reelRoute");
-const shopRoute = require('./routes/shopRoute');
-const transactionRoute = require("./routes/transactionRoute");
+const userRoute = require("../routes/userRoute");
+const reelRoute = require("../routes/reelRoute");
+const shopRoute = require('../routes/shopRoute');
+const transactionRoute = require("../routes/transactionRoute");
 
 
 require('dotenv').config();
@@ -29,7 +29,7 @@ app.use(
 
 app.use(flash());
 
-const db = require("./config/mongoose-connection");
+const db = require("../config/mongoose-connection");
 
 
 app.use('/users', userRoute);
