@@ -15,7 +15,7 @@ app.set("view engine", "ejs");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "../public"))); // Adjusted path
+app.use(express.static(path.join(__dirname, "../public"))); // Adjust path
 
 app.use(
   expressSession({
@@ -36,11 +36,11 @@ const reelRoute = require("../routes/reelRoute");
 const shopRoute = require("../routes/shopRoute");
 const transactionRoute = require("../routes/transactionRoute");
 
-app.use("/users", userRoute);
-app.use("/reel", reelRoute);
-app.use("/shop", shopRoute);
-app.use("/tran", transactionRoute);
+app.use("/api/users", userRoute);
+app.use("/api/reel", reelRoute);
+app.use("/api/shop", shopRoute);
+app.use("/api/tran", transactionRoute);
 
-// Export for Vercel Serverless
+// Export for Vercel
 module.exports = app;
-module.exports.handler = serverless(app);
+module.exports.handler = serverless(app);  // ✅ Important for Vercel
