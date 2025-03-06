@@ -1,5 +1,4 @@
 const express = require("express");
-const serverless = require("serverless-http"); // Required for Vercel
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const flash = require("connect-flash");
@@ -15,7 +14,7 @@ app.set("view engine", "ejs");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "../public"))); // Adjust path
+app.use(express.static(path.join(__dirname, "public")));
 
 app.use(
   expressSession({
@@ -28,25 +27,21 @@ app.use(
 app.use(flash());
 
 // Database Connection
-const db = require("../config/mongoose-connection");
+const db = require("./config/mongoose-connection");
 
 // Routes
-const userRoute = require("../routes/userRoute");
-const reelRoute = require("../routes/reelRoute");
-const shopRoute = require("../routes/shopRoute");
-const transactionRoute = require("../routes/transactionRoute");
+const userRoute = require("./routes/userRoute");
+const reelRoute = require("./routes/reelRoute");
+const shopRoute = require("./routes/shopRoute");
+const transactionRoute = require("./routes/transactionRoute");
 
 app.use("/users", userRoute);
 app.use("/reel", reelRoute);
 app.use("/shop", shopRoute);
 app.use("/tran", transactionRoute);
 
-// ✅ Add Local Server Support
-if (process.env.NODE_ENV !== "production") {
-  const PORT = process.env.PORT || 3000;
-  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-}
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
 // Export for Vercel
 module.exports = app;
-module.exports.handler = serverless(app);  // ✅ Important for Vercel
