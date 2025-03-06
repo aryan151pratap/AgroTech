@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Format Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    
 </head>
 <body class="bg-gray-50 font-sans bg-gradient-to-br from-gray-100 to-gray-200 min-h-screen">
     <!-- Navbar -->
@@ -40,7 +39,7 @@
                     <li><a href="/tran/loan" class="hover:text-green-400 block">Get Loan</a></li>
                     <% if(users.blogger == "yes"){ %>
                         <li><a href="/reel/create" class="hover:text-green-400 block">Add Blogs/Articles</a></li>
-                        <% } %>
+                    <% } %>
                     <li><a href="/users/seller" class="hover:text-green-400 block">Seller</a></li>
                     <li><a href="/tran/transaction" class="hover:text-green-400 block">Transaction History</a></li>
                     <li><a href="/users/profile" class="hover:text-green-400 block">Profile</a></li>
@@ -62,7 +61,7 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 px-4">
             <% fileData.reverse().forEach(function(items){ %>
                 <% if(items.fileType && items.fileType.startsWith('image/')){ %>
-                    <div onclick='openModal("<%= items.head %>", "<%= items.content %>", "data:image/jpeg;base64,<%= items.data.toString("base64") %>")' 
+                    <div onclick='openModal("<%= encodeURIComponent(items.head) %>", "<%= encodeURIComponent(items.content) %>", "<%= encodeURIComponent('data:image/jpeg;base64,' + items.data.toString('base64')) %>")' 
                          class="group relative bg-white rounded-xl shadow-md hover:shadow-xl cursor-pointer transform transition-all duration-300 hover:-translate-y-2 overflow-hidden">
                         <div class="relative h-40 overflow-hidden">
                             <img src="data:image/jpeg;base64,<%= items.data.toString('base64') %>" 
@@ -113,15 +112,16 @@
             </div>
         </div>
     </div>
+
     <script>
         document.getElementById('toggleSidebar').addEventListener('click', function() {
             document.getElementById('mobileSidebar').classList.toggle('-translate-x-full');
         });
 
         function openModal(title, content, imageSrc) {
-            document.getElementById('modal-title').innerText = title;
-            document.getElementById('modal-content').innerText = content;
-            document.getElementById('modal-image').src = imageSrc;
+            document.getElementById('modal-title').innerText = decodeURIComponent(title);
+            document.getElementById('modal-content').innerText = decodeURIComponent(content);
+            document.getElementById('modal-image').src = decodeURIComponent(imageSrc);
             document.getElementById('modal').classList.remove('hidden');
             document.body.classList.add('overflow-hidden');
         }
