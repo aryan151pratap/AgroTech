@@ -11,7 +11,7 @@ const {generatetoken} = require("../utils/generate_token");
 require('dotenv').config();
 
 const acc_sid = process.env.TWILIO_SID;
-const acc_token = process.env.TEILIO_TOKEN;
+const acc_token = process.env.TWILIO_TOKEN;
 
 const twilio_client = new twilio(acc_sid, acc_token);
 

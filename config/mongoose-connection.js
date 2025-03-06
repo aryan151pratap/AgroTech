@@ -1,19 +1,22 @@
 const mongoose = require("mongoose");
-const dbgr = require("debug")("development:mongoose");
-const config = require("config");
+require("dotenv").config()
 
-const MONGO_URI = config.get("MONGODB_URI");
+const MONGO_URI = process.env.MONGODB_URI; 
+
+if (!MONGO_URI) {
+    console.error("❌ MONGODB_URI is not defined in environment variables!");
+    process.exit(1);
+}
 
 async function connectDB() {
     try {
-        await mongoose.connect(`${MONGO_URI}otpdb`, { useNewUrlParser: true, useUnifiedTopology: true });
+        await mongoose.connect(MONGO_URI);
 
         console.log("✅ Connected to MongoDB");
-
         return mongoose.connection;
     } catch (err) {
-        console.log(err.message);
-        process.exit(1); 
+        console.error("❌ Error connecting to MongoDB:", err.message);
+        process.exit(1);
     }
 }
 
