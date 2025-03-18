@@ -21,7 +21,7 @@ AgroTech is a full-stack web application designed to empower farmers by providin
 ## 🚀 Installation & Setup
 ### 1️⃣ Clone the repository
 ```sh
-git clone https://github.com/your-username/agrotech.git
+git clone https://github.com/aryan151pratap/agrotech.git
 cd agrotech
 ```
 ### 2️⃣ Install dependencies
@@ -31,16 +31,15 @@ npm install
 ### 3️⃣ Set up environment variables
 Create a `.env` file and add the following:
 ```sh
-MONGO_URI=your_mongodb_connection_string
-PORT=5000
-EMAIL_USER=your_email@example.com
-EMAIL_PASS=your_email_password
+MONGODB_URI=mongodb+srv://apratapsingh151:I4ZVkTUBcysNt20T@cluster0.njxal.mongodb.net/
+PORT=3000
+EMAIL_USER=beast152oggy@gmail.com
 ```
 ### 4️⃣ Start the server
 ```sh
 npm start
 ```
-The app will be available at `http://localhost:5000`
+The app will be available at `http://localhost:3000`
 
 ## 📸 Screenshots
 (Include screenshots of your project here)
@@ -53,5 +52,5 @@ This project is licensed under the MIT License.
 Contributions are welcome! Feel free to fork, open an issue, or submit a pull request.
 
 ## ✨ Connect with Me
-🔗 [LinkedIn](https://www.linkedin.com/in/your-profile)
-📧 Email: your-email@example.com
+🔗 [LinkedIn](https://www.linkedin.com/in/aryan-pratap-singh-105059290/)
+📧 Email: apratapsingh151@gmail.com
