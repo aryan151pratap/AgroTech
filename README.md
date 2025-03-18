@@ -42,7 +42,9 @@ npm start
 The app will be available at `http://localhost:3000`
 
 ## 📸 Screenshots
-(Include screenshots of your project here)
+![Screenshot 2025-03-18 223237](https://github.com/user-attachments/assets/929e44e3-5619-472b-98f2-b5c3f629d893)
+
+![Screenshot 2025-03-18 223316](https://github.com/user-attachments/assets/0d7ce7a7-562a-4e6d-b900-c652485a585d)
 
 ## 📝 License
 This project is licensed under the MIT License.
