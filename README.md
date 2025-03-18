@@ -46,8 +46,9 @@ The app will be available at `http://localhost:3000`
 
 ![Screenshot 2025-03-18 223316](https://github.com/user-attachments/assets/0d7ce7a7-562a-4e6d-b900-c652485a585d)
 
+![Screenshot 2025-03-18 225020](https://github.com/user-attachments/assets/0251f40f-27d9-4973-96b9-b15836c27819)
 
-![Screenshot 2025-03-18 224735](https://github.com/user-attachments/assets/b18c764e-c28a-478d-9234-1889d6644f98) ![Screenshot 2025-03-18 223731](https://github.com/user-attachments/assets/c3393910-a80c-4a72-959b-12e781bf5998)
+![Screenshot 2025-03-18 225002](https://github.com/user-attachments/assets/9c0c1ee5-b9e6-4556-9d53-b67783eaf540)
 
 ## 📝 License
 This project is licensed under the MIT License.
